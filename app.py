@@ -19,7 +19,7 @@ cred = credentials.Certificate("firebase-key.json")
 
 firebase_admin.initialize_app(cred, {
     "databaseURL": "https://ai-smart-icu-monitoring-default-rtdb.asia-southeast1.firebasedatabase.app/"
-})
+})git
 
 # -----------------------------
 # Load AI Model
