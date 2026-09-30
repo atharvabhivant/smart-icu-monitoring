@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Hospital Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="container mt-4">
+
+    <div class="card shadow-lg">
+
+        <div class="card-body bg-primary text-white">
+
+            <h1 class="text-center">
+                <i class="fa-solid fa-hospital"></i>
+                AI SMART ICU HOSPITAL
+            </h1>
+
+            <h4 class="text-center">
+                AI Enabled Smart ICU Monitoring System
+            </h4>
+
+            <hr>
+
+            <div class="row">
+
+                <div class="col-md-6">
+
+                    <h5>
+                        <i class="fa-solid fa-user-doctor"></i>
+                        Doctor : Dr. Sharma
+                    </h5>
+
+                    <h5>
+                        <i class="fa-solid fa-location-dot"></i>
+                        Pune, Maharashtra
+                    </h5>
+
+                </div>
+
+                <div class="col-md-6 text-end">
+
+                    <h5 id="currentTime">
+                        Loading Time...
+                    </h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="container mt-4">
+
+    <div class="row g-4">
+
+        <!-- Total ICU Beds -->
+        <div class="col-md-4">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <i class="fa-solid fa-bed fa-3x text-primary"></i>
+                    <h4 class="mt-3">Total ICU Beds</h4>
+                    <h1 id="totalBeds">10</h1>
+                </div>
+            </div>
+        </div>
+
+        <!-- Available Beds -->
+        <div class="col-md-4">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <i class="fa-solid fa-procedures fa-3x text-success"></i>
+                    <h4 class="mt-3">Available Beds</h4>
+                    <h1 id="availableBeds">4</h1>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stable Patients -->
+        <div class="col-md-4">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <i class="fa-solid fa-heart-pulse fa-3x text-success"></i>
+                    <h4 class="mt-3">Stable Patients</h4>
+                    <h1 id="stablePatients">6</h1>
+                </div>
+            </div>
+        </div>
+
+        <!-- Warning Patients -->
+        <div class="col-md-4">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <i class="fa-solid fa-triangle-exclamation fa-3x text-warning"></i>
+                    <h4 class="mt-3">Warning Patients</h4>
+                    <h1 id="warningPatients">2</h1>
+                </div>
+            </div>
+        </div>
+
+        <!-- Critical Patients -->
+        <div class="col-md-4">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <i class="fa-solid fa-triangle-exclamation fa-3x text-danger"></i>
+                    <h4 class="mt-3">Critical Patients</h4>
+                    <h1 id="criticalPatients">2</h1>
+                </div>
+            </div>
+        </div>
+
+        <hr class="mt-5">
+
+<hr class="mt-5">
+
+<h2 class="text-center mb-4">
+    Live ICU Bed Monitoring
+</h2>
+
+<div class="row" id="bedContainer">
+
+</div>
+
+    </div>
+
+</div>
+
+<script>
+
+async function loadHospitalData(){
+
+    const response = await fetch("/hospital_data");
+
+    const data = await response.json();
+
+    document.getElementById("totalBeds").innerHTML =
+        data.totalBeds;
+
+    document.getElementById("availableBeds").innerHTML =
+        data.availableBeds;
+
+    document.getElementById("stablePatients").innerHTML =
+        data.stablePatients;
+
+    document.getElementById("warningPatients").innerHTML =
+        data.warningPatients;
+
+    document.getElementById("criticalPatients").innerHTML =
+        data.criticalPatients;
+
+const bedContainer = document.getElementById("bedContainer");
+
+
+
+bedContainer.innerHTML = "";
+
+for (const bedId in data.beds) {
+
+    const bed = data.beds[bedId];
+
+    let color = "success";
+
+    if (bed.Status == "Warning")
+        color = "warning";
+
+    if (bed.Status == "Critical")
+        color = "danger";
+
+    if (bed.Status == "Available")
+        color = "secondary";
+
+    bedContainer.innerHTML += `
+
+    <div class="col-md-4 mb-3">
+
+        <div class="card border-${color} shadow"
+     onclick="window.location='/patient?bed=${bedId}'"
+     style="cursor:pointer;">
+
+            <div class="card-body text-center">
+
+                <h4>${bedId}</h4>
+
+                <h5>${bed.Name}</h5>
+
+                <p>❤️ Heart Rate: ${bed.HeartRate}</p>
+
+                <p>🩸 SpO₂: ${bed.SpO2}%</p>
+
+                <p>🌡 Temperature: ${bed.Temperature}°C</p>
+
+                <h4 class="text-${color}">
+                    ${bed.Status}
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    `;
+}
+}
+
+loadHospitalData();
+
+setInterval(loadHospitalData,3000);
+
+function updateClock(){
+
+    const now = new Date();
+
+    document.getElementById("currentTime").innerHTML =
+        now.toLocaleString();
+
+}
+
+updateClock();
+
+setInterval(updateClock,1000);
+
+</script>
+
+</body>
+
+</html>
+

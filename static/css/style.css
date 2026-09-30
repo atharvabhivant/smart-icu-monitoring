@@ -1,0 +1,377 @@
+/* ==========================================
+   AI SMART ICU MONITORING SYSTEM
+   CSS PART 1
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+
+    background:#0f172a;
+
+    color:white;
+
+    overflow-x:hidden;
+
+}
+
+/* Header */
+
+.header{
+
+    background:#111827;
+
+    padding:25px;
+
+    border-radius:15px;
+
+    margin-top:20px;
+
+    margin-bottom:30px;
+
+    box-shadow:0px 0px 25px rgba(0,0,0,.4);
+
+}
+
+.header h1{
+
+    font-size:34px;
+
+    font-weight:700;
+
+}
+
+.header p{
+
+    color:#cbd5e1;
+
+    margin-top:8px;
+
+}
+
+.time-box{
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    color:#22c55e;
+
+}
+
+/* Patient Cards */
+
+.patient-card{
+
+    background:#1e293b;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    text-align:center;
+
+    margin-bottom:20px;
+
+    transition:.3s;
+
+}
+
+.patient-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0px 0px 20px rgba(34,197,94,.3);
+
+}
+
+.patient-card h5{
+
+    color:#94a3b8;
+
+    margin-bottom:10px;
+
+}
+
+.patient-card h3{
+
+    font-weight:bold;
+
+}
+
+/* Vital Cards */
+
+.vital-card{
+
+    border:none;
+
+    border-radius:18px;
+
+    color:white;
+
+    transition:.3s;
+
+    margin-bottom:20px;
+
+}
+
+.vital-card:hover{
+
+    transform:scale(1.03);
+
+}
+
+.heart{
+
+    background:#dc2626;
+
+}
+
+.spo2{
+
+    background:#2563eb;
+
+}
+
+.temp{
+
+    background:#ea580c;
+
+}
+
+.prediction{
+
+    background:#16a34a;
+
+}
+
+.vital-card h2{
+
+    font-size:34px;
+
+    font-weight:bold;
+
+}
+
+.vital-card p{
+
+    margin-top:10px;
+
+}
+/* ==========================================
+   ECG CARD
+========================================== */
+
+.card{
+
+    background:#1e293b;
+
+    border:none;
+
+    border-radius:18px;
+
+    color:white;
+
+    box-shadow:0 0 20px rgba(0,0,0,.4);
+
+}
+
+.card-header{
+
+    background:#0f172a;
+
+    border:none;
+
+    font-size:22px;
+
+    font-weight:600;
+
+    color:#38bdf8;
+
+    border-radius:18px 18px 0 0;
+
+}
+
+canvas{
+
+    width:100% !important;
+
+    height:300px !important;
+
+}
+
+/* ==========================================
+   DOWNLOAD BUTTON
+========================================== */
+
+.btn-success{
+
+    background:#22c55e;
+
+    border:none;
+
+    padding:14px 35px;
+
+    font-size:18px;
+
+    border-radius:12px;
+
+    transition:.3s;
+
+}
+
+.btn-success:hover{
+
+    transform:scale(1.05);
+
+    background:#16a34a;
+
+}
+
+/* ==========================================
+   ANIMATIONS
+========================================== */
+
+@keyframes pulse{
+
+    0%{
+
+        transform:scale(1);
+
+    }
+
+    50%{
+
+        transform:scale(1.05);
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+    }
+
+}
+
+.heart i{
+
+    animation:pulse 1s infinite;
+
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN
+========================================== */
+
+@media(max-width:992px){
+
+.header{
+
+text-align:center;
+
+}
+
+.time-box{
+
+margin-top:20px;
+
+text-align:center;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.header h1{
+
+font-size:26px;
+
+}
+
+.vital-card{
+
+margin-bottom:20px;
+
+}
+
+.patient-card{
+
+margin-bottom:20px;
+
+}
+
+canvas{
+
+height:220px !important;
+
+}
+
+}
+
+@media(max-width:576px){
+
+.header{
+
+padding:20px;
+
+}
+
+.header h1{
+
+font-size:22px;
+
+}
+
+.time-box{
+
+font-size:18px;
+
+}
+
+.vital-card h2{
+
+font-size:26px;
+
+}
+
+.patient-card h3{
+
+font-size:22px;
+
+}
+
+}
+
+/* ================================
+   Emergency Alert
+================================ */
+
+.alert-critical{
+
+    background:#b30000;
+    color:white;
+    padding:12px;
+    border-radius:10px;
+    text-align:center;
+    font-size:18px;
+    font-weight:bold;
+    margin-top:15px;
+    animation:blink 1s infinite;
+
+}
+
+@keyframes blink{
+
+0%{opacity:1;}
+50%{opacity:0.4;}
+100%{opacity:1;}
+
+}
+

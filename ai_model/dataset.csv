@@ -1,0 +1,13 @@
+HeartRate,SpO2,Temperature,Condition
+78,98,36.7,Normal
+82,99,36.8,Normal
+88,97,37.0,Normal
+92,96,37.2,Normal
+105,94,37.9,Warning
+110,93,38.2,Warning
+115,92,38.4,Warning
+125,89,39.2,Critical
+130,88,39.5,Critical
+135,85,40.0,Critical
+45,98,36.8,Warning
+38,96,37.1,Critical
