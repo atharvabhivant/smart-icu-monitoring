@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: smart-icu-monitoring
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 1 --timeout 120 app:app
+    healthCheckPath: /healthz
+    autoDeployTrigger: commit
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: PYTHON_VERSION
+        value: 3.13.0
+      - key: FIREBASE_DATABASE_URL
+        value: https://ai-smart-icu-monitoring-default-rtdb.asia-southeast1.firebasedatabase.app/
+      - key: FIREBASE_CREDENTIALS_PATH
+        value: /etc/secrets/firebase-key.json
+      - key: FLASK_SECRET_KEY
+        generateValue: true
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: ALERT_EMAIL_TO
+        sync: false
+      - key: ALERT_FROM_EMAIL
+        sync: false
+      - key: EMAIL_PROVIDER_URL
+        value: https://api.resend.com/emails
+      - key: EMAIL_PROVIDER_API_KEY
+        sync: false
+      - key: ALERT_COOLDOWN_SECONDS
+        value: "900"
+      - key: HISTORY_INTERVAL_SECONDS
+        value: "30"
+      - key: TOTAL_BEDS
+        value: "10"
