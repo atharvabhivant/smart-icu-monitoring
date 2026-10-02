@@ -15,8 +15,8 @@ services:
         value: 3.13.0
       - key: FIREBASE_DATABASE_URL
         value: https://ai-smart-icu-monitoring-default-rtdb.asia-southeast1.firebasedatabase.app/
-      - key: FIREBASE_CREDENTIALS_PATH
-        value: /etc/secrets/firebase-key.json
+      - key: FIREBASE_CREDENTIALS_BASE64
+        sync: false
       - key: FLASK_SECRET_KEY
         generateValue: true
       - key: ADMIN_USERNAME

@@ -5,6 +5,7 @@ import logging
 import math
 import os
 import time
+import base64
 from datetime import datetime, timezone
 from functools import wraps
 from io import BytesIO
@@ -65,19 +66,36 @@ MODEL_PATH = BASE_DIR / "ai_model" / "icu_model.pkl"
 
 
 def initialize_firebase() -> None:
-    if not FIREBASE_CREDENTIALS_PATH.is_file():
-        raise RuntimeError(
-            "Firebase credentials were not found. Set FIREBASE_CREDENTIALS_PATH "
-            "to a local service-account file or a Render secret file."
-        )
     if not FIREBASE_DATABASE_URL:
         raise RuntimeError("FIREBASE_DATABASE_URL must be configured.")
+
+    encoded_credentials = os.getenv("FIREBASE_CREDENTIALS_BASE64", "").strip()
+    if encoded_credentials:
+        try:
+            certificate_data = json.loads(
+                base64.b64decode(encoded_credentials, validate=True)
+            )
+        except (ValueError, json.JSONDecodeError) as exc:
+            raise RuntimeError(
+                "FIREBASE_CREDENTIALS_BASE64 must contain a base64-encoded "
+                "Firebase service-account JSON file."
+            ) from exc
+        if not isinstance(certificate_data, dict):
+            raise RuntimeError("Firebase service-account JSON must be an object.")
+        certificate = credentials.Certificate(certificate_data)
+    else:
+        if not FIREBASE_CREDENTIALS_PATH.is_file():
+            raise RuntimeError(
+                "Firebase credentials were not found. Configure "
+                "FIREBASE_CREDENTIALS_BASE64 or FIREBASE_CREDENTIALS_PATH."
+            )
+        certificate = credentials.Certificate(str(FIREBASE_CREDENTIALS_PATH))
 
     try:
         firebase_admin.get_app()
     except ValueError:
         firebase_admin.initialize_app(
-            credentials.Certificate(str(FIREBASE_CREDENTIALS_PATH)),
+            certificate,
             {"databaseURL": FIREBASE_DATABASE_URL},
         )
 

@@ -22,8 +22,8 @@ external datastore; no Render database is required.
 
 After creating the Blueprint, configure these values in Render:
 
-- Secret file: upload the Firebase service-account JSON as
-  `/etc/secrets/firebase-key.json`.
+- `FIREBASE_CREDENTIALS_BASE64`: base64-encoded contents of the Firebase
+  service-account JSON file, stored as a secret environment variable.
 - `ADMIN_USERNAME`
 - `ADMIN_PASSWORD` or `ADMIN_PASSWORD_HASH`
 - `ALERT_EMAIL_TO`
